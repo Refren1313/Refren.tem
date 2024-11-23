@@ -7,6 +7,8 @@ page.style.width = dW;
 
 const sign_up = document.querySelector('.sign_up');
 
+const sign_in = document.querySelector('.sign_in');
+
 const verify = document.querySelector('.verify');
 
 const main_page = document.querySelector('.main_page');
@@ -39,6 +41,18 @@ const applied_page = document.querySelector('.applied_page');
 
 const err = document.querySelector('.err');
 
+
+const toSignIn = document.getElementById('toSignIn');
+toSignIn.addEventListener('click', () => {
+  sign_up.style.display = 'none';
+  sign_in.style.display = 'block';
+});
+
+const toSignUp = document.getElementById('toSignUp');
+toSignUp.addEventListener('click', () => {
+  sign_in.style.display = 'none';
+  sign_up.style.display = 'block';
+});
 
 const userNamebtn = document.getElementById('userNamebtn');
 userNamebtn.addEventListener('click', () => {
