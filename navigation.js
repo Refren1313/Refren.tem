@@ -25,6 +25,8 @@ const notification_page = document.querySelector('.notification_page');
 
 const no_task_page = document.querySelector('.no_task_page');
 
+const profile_page = document.querySelector('.profile_page');
+
 const transfer_to_wallet_page = document.querySelector('.transfer_to_wallet_page');
 
 const transfer_to_fnd_page = document.querySelector('.transfer_to_fnd_page');
@@ -37,6 +39,12 @@ const applied_page = document.querySelector('.applied_page');
 
 const err = document.querySelector('.err');
 
+
+const userNamebtn = document.getElementById('userNamebtn');
+userNamebtn.addEventListener('click', () => {
+  main_page.style.display = 'none';
+  profile_page.style.display = 'block';
+});
 
 const tasks = document.getElementById('tasks');
 tasks.addEventListener('click', () => {
@@ -78,7 +86,11 @@ toNotification.addEventListener('click', () => {
  notification_page.style.display = 'block';
 });
 
-
+const profileBack = document.getElementById('profileBack');
+profileBack.addEventListener('click', () => {
+  profile_page.style.display = 'none';
+  main_page.style.display = 'block';
+});
 
 const tasksBack = document.getElementById('tasksBack');
 tasksBack.addEventListener('click', () => {
@@ -145,4 +157,3 @@ noPendingTaskBack.addEventListener('click', () => {
  no_task_page.style.display = 'none';
  main_page.style.display = 'block';
 });
-
