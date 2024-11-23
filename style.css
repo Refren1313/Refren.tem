@@ -262,6 +262,71 @@ body {
   border-radius: 10px;
 }
 
+.signUp,.signIn{
+  margin: 10px;
+  width: 280px;
+  min-height: 300px;
+  border: 2px solid #FF9E00;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 10px;
+}
+.signUp h3, .signIn h3{
+  text-align: center;
+  color: #FF9E00;
+}
+.InpBox{
+  position: relative;
+  border-bottom: 0.8px solid #FF9E00;
+  margin-bottom: 8px;
+}
+.InpBox label{
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-20%);
+  pointer-events: none;
+  font-size: 12px;
+  transition: .5s;
+  color: #707070CF;
+}
+.InpBox input:focus~label,
+.InpBox input:valid~label {
+  font-size: 10px;
+  top: -2px;
+  color: #FF9E00;
+}
+.InpBox input{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #FF9E00;
+  padding: 4px;
+  height: 30px;
+  width: 100%;
+  font-size: 12px;
+}
+
+.signUp button, .signIn button{
+  height: 40px;
+  width: 60%;
+  border-radius: 12px;
+  border: none;
+  background-color: #FF9E00;
+}
+
+.submitBox{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100px;
+}
+.submitBox p,a{
+  color: #FF9E00;
+  font-size: 12px;
+  margin: 8px;
+}
+
 
 
 /*logos*/
