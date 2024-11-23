@@ -1,5 +1,9 @@
 const sign_up = document.querySelector('.sign_up');
 
+const sign_in = document.querySelector('.sign_in');
+
+const profile_page = document.querySelector('.profile_page');
+
 const verify = document.querySelector('.verify');
 
 const main_page = document.querySelector('.main_page');
@@ -141,7 +145,7 @@ onAuthStateChanged(auth, async (user) => {
       const completed = document.querySelector('.completed');
       completed.textContent = taskData.completed;
       
-      if (taskData.completed == taskData.target) {
+      if (taskData.completed >= taskData.target) {
         let newBalance = userData.balance + taskData.return_amount;
         await updateDoc(doc(db, 'users', res.uid), {
           balance: newBalance,
@@ -672,6 +676,12 @@ onAuthStateChanged(auth, async (user) => {
         IWA.textContent = 'You do not have enough money.'
       }
     };
+    const log_out = document.getElementById('log_out');
+    log_out.addEventListener('click', async () => {
+      await signOut(auth);
+      profile_page.style.display = 'none';
+      sign_up.style.display = 'block';
+    });
     
     } else {
       verify.style.display = 'block';
@@ -742,6 +752,25 @@ onAuthStateChanged(auth, async (user) => {
     signup.addEventListener('submit', (e) => {
       e.preventDefault();
       signUp();
+    });
+
+    
+    const signIn = async () => {
+      const email = document.getElementById('signIn_email').value;
+      const password = document.getElementById('signIn_password').value;
+      const in_wrong_pass = document.querySelector('.in_wrong_pass');
+      in_wrong_pass.textContent = '';
+      try {
+        await signInWithEmailAndPassword(auth, email, password)
+        sign_in.style.display = 'none';
+        main_page.style.display = 'block';
+      } catch (e) {
+        in_wrong_pass.textContent = 'Wrong password.';
+      }
+    }
+    signin.addEventListener('submit', (e) => {
+      e.preventDefault();
+      signIn();
     });
   }
 });
