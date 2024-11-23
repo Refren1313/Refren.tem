@@ -43,11 +43,61 @@
       </form>
     </div>
   </div>
+  
+  <div style="display: none;" class="verify">
+    <div class="header">
+      <span class="heading">Sign Up</span>
+    </div>
+    <div class="nullMsg">
+      <h3 class="verifyHeading">Verify your email.</h3><br>
+      <div><span>Verification link has been sent to </span><span class="verification_email"></span></div>
+      <div></div>
+    </div>
+  </div>
+  
+  <div style="display: none;" class="page profile_page">
+    <div class="header">
+      <button class="back" id="profileBack">
+        <div class="Logo">
+          <div class="middle">
+            <div class="top"></div>
+            <div class="bottom"></div>
+          </div>
+          <div class="right"></div>
+        </div>
+      </button>
+      <span class="heading">Profile</span>
+    </div>
+    <div class="userName"></div>
+    <div class="profile_content">
+      <div>
+        <span>ID:</span>
+        <span class="userID"></span>
+      </div>
+      <div>
+        <span>E-mail:</span>
+        <span class="userEmail"></span>
+      </div>
+      <div>
+        <span>Phone Number:</span>
+        <span class="user_phone"></span>
+      </div>
+      <div>
+        <span>Refered by: (<span class="refName"></span>)</span>
+        <span class="refID"></span>
+      </div>
+  
+      <button id="log_out" disabled>Log out</button>
+    </div>
+  </div>
 
   <div style="display: none;" class="page main_page">
     <div class="header">
       <span class="heading">R E F R E N</span>
       <span class="main-top-right">
+        <button id="userNamebtn">
+          <span class="userNameMain"></span>
+        </button>
         <button id="toNotification">
           <div class="notice_btn">
             <div class="nt">
@@ -619,4 +669,4 @@
   <script src="navigation.js"></script>
 </body>
 
-</html>
+      </html>
