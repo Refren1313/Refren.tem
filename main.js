@@ -695,7 +695,7 @@ onAuthStateChanged(auth, async (user) => {
       if (referingData) {
         if (password === confirm_password) {
           const res = await createUserWithEmailAndPassword(auth, email, password);
-        
+        sign_up.style.display = 'none';
           try {
             await updateProfile(res.user, {
               displayName,
@@ -728,7 +728,7 @@ onAuthStateChanged(auth, async (user) => {
           }
           const verification_email = document.querySelector('.verification_email');
           verification_email.textContent = `${email}`;
-          sign_up.style.display = 'none';
+          
           verify.style.display = 'block';
         } else {
           const wrongPass = document.querySelector('.wrongPass');
