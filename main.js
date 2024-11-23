@@ -682,16 +682,12 @@ onAuthStateChanged(auth, async (user) => {
       const log_out = document.getElementById('log_out');
       log_out.addEventListener('click', async () => {
         await signOut(auth);
-        profile_page.style.display = 'none';
-        sign_up.style.display = 'block';
+        location.reload();
       });
 
     } else {
       verify.style.display = 'block';
       await sendEmailVerification(auth.currentUser)
-        .then(() => {
-          alert('verification link sent.')
-        });
     }
   } else {
     sign_up.style.display = 'block';
@@ -729,9 +725,6 @@ onAuthStateChanged(auth, async (user) => {
             });
 
             await sendEmailVerification(auth.currentUser)
-              .then(() => {
-                alert('verification link sent.')
-              });
           } catch (e) {
             const err = document.querySelector('.err');
             err.textContent = 'Sign up failed';
