@@ -262,6 +262,7 @@ body {
   border-radius: 10px;
 }
 
+
 .signUp,.signIn{
   margin: 10px;
   width: 280px;
@@ -326,6 +327,8 @@ body {
   font-size: 12px;
   margin: 8px;
 }
+
+
 
 
 
@@ -410,4 +413,4 @@ body {
 .bottom {
  flex: 0.5;
  background-image: linear-gradient(to top right, transparent 50%, #FF9E00 50%);
-     }
+}
