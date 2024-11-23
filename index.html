@@ -12,7 +12,120 @@
 </head>
 
 <body>
-  <div style="display: none;" class="sign_up">
+    <div style="display: none;" class="sign_up">
+    <div class="nullMsg">
+    <div class="signUp">
+      <form id="SignUp">
+        <h3>Sign Up</h3>
+        <div class="InpBox">
+          <input type="text" name="" id="displayName" required>
+          <label>Name</label>
+        </div>
+        <div class="InpBox">
+          <input type="text" name="" id="email" required>
+          <label>Email</label>
+        </div>
+        <div class="InpBox">
+          <input type="text" name="" id="phone" required>
+          <label>Phone Number</label>
+        </div>
+        <div class="InpBox">
+          <input type="text" name="" id="referedBy" required>
+          <label>Refered by</label>
+        </div>
+        <div style="color: red;font-size: 10px;" class="user_not_found"></div>
+        <div class="InpBox">
+          <input type="password" name="pass" id="password" required>
+          <label>Password</label>
+        </div>
+        <div class="InpBox">
+          <input type="password" name="pass" id="confirm_password" required>
+          <label>Confirm Password</label>
+        </div>
+        <div style="color: red;font-size: 10px;" class="wrongPass"></div><br>
+        <div class="submitBox">
+          <button type="submit">Sign up</button>
+          <p>Already have an account? <a id="toSignIn" href="#">Sign in</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+  
+  <div style="display: none;" class="sign_in">
+    <div class="nullMsg">
+      <div class="signIn">
+      <form id="SignIn">
+        <h3>Sign In</h3>
+        <div class="InpBox">
+          <input type="text" name="" id="signIn_email" required>
+          <label>Email</label>
+        </div>
+        <div class="InpBox">
+          <input type="password" name="pass" id="signIn_password" required>
+          <label>Password</label>
+        </div>
+        <div style="color: red;font-size: 10px;" class="in_wrong_pass"></div><br>
+        <div class="submitBox">
+          <button type="submit">Sign in</button>
+          <p>Don't have an account? <a id="toSignUp" href="#">Sign up</a>
+          </p>
+        </div>
+      </form>
+    </div>
+    </div>
+  </div>
+  
+  <div style="display: none;" class="verify">
+    <div class="header">
+      <span class="heading">Sign Up</span>
+    </div>
+    <div class="nullMsg">
+      <h3 class="verifyHeading">Verify your email.</h3><br>
+      <div><span>Verification link has been sent to </span><span class="verification_email"></span></div>
+      <div></div>
+    </div>
+  </div>
+  
+  <div style="display: none;" class="page profile_page">
+    <div class="header">
+      <button class="back" id="profileBack">
+        <div class="Logo">
+          <div class="middle">
+            <div class="top"></div>
+            <div class="bottom"></div>
+          </div>
+          <div class="right"></div>
+        </div>
+      </button>
+      <span class="heading">Profile</span>
+    </div>
+    <div class="userName"></div>
+    <div class="profile_content">
+      <div>
+        <span>ID:</span>
+        <span class="userID"></span>
+      </div>
+      <div>
+        <span>E-mail:</span>
+        <span class="userEmail"></span>
+      </div>
+      <div>
+        <span>Phone Number:</span>
+        <span class="user_phone"></span>
+      </div>
+      <div>
+        <span>Refered by: (<span class="refName"></span>)</span>
+        <span class="refID"></span>
+      </div>
+  
+      <button id="log_out" disabled>Log out</button>
+    </div>
+  </div>
+
+  <div style="display: none;" class="page main_page">
+    <div class="header"><div style="display: none;" class="sign_up">
     <div class="header">
       <span class="heading">Sign Up</span>
     </div>
@@ -93,6 +206,8 @@
 
   <div style="display: none;" class="page main_page">
     <div class="header">
+      <span class="heading">R E F R E N</span>
+
       <span class="heading">R E F R E N</span>
       <span class="main-top-right">
         <button id="userNamebtn">
