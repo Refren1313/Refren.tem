@@ -68,6 +68,10 @@ body {
  margin-bottom: 10px;
 }
 
+.verifyHeading{
+  font-size: 30;
+}
+
 .options {
  display: block;
  width: 100%;
@@ -128,6 +132,7 @@ body {
 
 .nullMsg {
  display: flex;
+ flex-direction: column;
  height: 80vh;
  justify-content: center;
  align-items: center;
@@ -200,6 +205,61 @@ body {
 .cards:disabled{
  background-color: #A0A0A0;
  color: #42445A;
+}
+
+.userName {
+  text-align: center;
+  font-size: 30px;
+  color: #FF9E00;
+  padding-top: 10px;
+}
+#userNamebtn{
+  border: none;
+  height: 24px;
+  background-color: transparent;
+  color: #FF9E00;
+  width: max-content;
+  padding-left: 10px;
+}
+
+.profile_content {
+  width: 90%;
+  height: max-content;
+  max-height: 95vh;
+  overflow: auto;
+  border: 1.2px solid #FF9E00;
+  color: #BD7500;
+  border-radius: 12px;
+  margin: 12px;
+  padding: 6px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.profile_content div {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.profile_content button {
+  height: 25px;
+  width: 50%;
+  font-size: 15px;
+  margin-top: 5px;
+  background-color: #FF9E00;
+  border: none;
+  border-radius: 10px;
+}
+.profile_content button:disabled {
+  height: 25px;
+  width: 50%;
+  font-size: 15px;
+  margin-top: 5px;
+  background-color: #626262;
+  border: none;
+  border-radius: 10px;
 }
 
 
@@ -285,4 +345,4 @@ body {
 .bottom {
  flex: 0.5;
  background-image: linear-gradient(to top right, transparent 50%, #FF9E00 50%);
-}
+     }
