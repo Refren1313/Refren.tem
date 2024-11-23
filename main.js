@@ -27,17 +27,18 @@ const NHEM = document.querySelector('.not_have_enough_money');
 
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, where, deleteDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDOnriam1YL8TvidVla7ix63mlQBlsvd7U",
-  authDomain: "test1-d87cf.firebaseapp.com",
-  projectId: "test1-d87cf",
-  storageBucket: "test1-d87cf.firebasestorage.app",
-  messagingSenderId: "23598319138",
-  appId: "1:23598319138:web:ac511f26c539ed83fb6c7b"
+  apiKey: "AIzaSyDvAB1YlK4KYsK9_93vlLC130xa_0iBiq4",
+    authDomain: "refren-1313.firebaseapp.com",
+    projectId: "refren-1313",
+    storageBucket: "refren-1313.firebasestorage.app",
+    messagingSenderId: "961146785168",
+    appId: "1:961146785168:web:05085a87977dd28eadb715",
+    measurementId: "G-FL0YD8TLKN"
 };
 
 
@@ -50,9 +51,11 @@ const db = getFirestore();
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    const res = user;
+    if (user.emailVerified) {
+      const res = user;
     main_page.style.display = 'block';
-
+    
+    
     const docSnap = await getDoc(doc(db, 'users', res.uid));
     const userData = docSnap.data();
     
@@ -61,6 +64,9 @@ onAuthStateChanged(auth, async (user) => {
     
     const referSnap = await getDoc(doc(db, 'pendingTask', userData.referedBy));
     const referData = referSnap.data();
+    
+    const referingSnap = await getDoc(doc(db, 'users', userData.referedBy));
+    const referingData = referingSnap.data();
     
     const depositSnap = await getDoc(doc(db, 'deposit', res.uid));
     const depositData = depositSnap.data();
@@ -164,6 +170,29 @@ onAuthStateChanged(auth, async (user) => {
     
     const wallet_balance = document.querySelector('.wallet_balance');
     wallet_balance.textContent = userData.walletBalance;
+    
+    const userNameMain = document.querySelector('.userNameMain');
+    userNameMain.textContent = userData.name;
+    
+    const userName = document.querySelector('.userName');
+    userName.textContent = userData.name;
+    
+    const userID = document.querySelector('.userID');
+    userID.textContent = userData.accountNo;
+    
+    const userEmail = document.querySelector('.userEmail');
+    userEmail.textContent = userData.email;
+    
+    const user_phone = document.querySelector('.user_phone');
+    user_phone.textContent = userData.phoneNumber;
+    
+    const refID = document.querySelector('.refID');
+    refID.textContent = referingData.accountNo;
+    
+    const refName = document.querySelector('.refName');
+    refName.textContent = referingData.name;
+    
+    
     
     if (userData.notificationInd) {
       const indicator = document.getElementById('indicator');
@@ -644,6 +673,13 @@ onAuthStateChanged(auth, async (user) => {
       }
     };
     
+    } else {
+      verify.style.display = 'block';
+      await sendEmailVerification(auth.currentUser)
+        .then(() => {
+          alert('verification link sent.')
+        });
+    }
   } else {
     sign_up.style.display = 'block';
     const signUp = async () => {
@@ -681,12 +717,19 @@ onAuthStateChanged(auth, async (user) => {
               notification: [],
               notificationInd: false,
             });
-            sign_up.style.display = 'none';
-            main_page.style.display = 'block';
+            
+            await sendEmailVerification(auth.currentUser)
+            .then(() => {
+              alert('verification link sent.')
+            });
           } catch (e) {
             const err = document.querySelector('.err');
             err.textContent = 'Sign up failed';
           }
+          const verification_email = document.querySelector('.verification_email');
+          verification_email.textContent = `${email}`;
+          sign_up.style.display = 'none';
+          verify.style.display = 'block';
         } else {
           const wrongPass = document.querySelector('.wrongPass');
           wrongPass.textContent = 'Wrong Password';
@@ -695,9 +738,8 @@ onAuthStateChanged(auth, async (user) => {
         const user_not_found = document.querySelector('.user_not_found');
         user_not_found.textContent = 'User not found.'
       }
-      
     }
-    signup.addEventListener('submit', e => {
+    signup.addEventListener('submit', (e) => {
       e.preventDefault();
       signUp();
     });
