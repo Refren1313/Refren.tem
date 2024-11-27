@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, where, deleteDoc, arrayUnion, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, getDocs, updateDoc, collection, deleteDoc, arrayUnion, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
 const sign_up = document.querySelector('.sign_up');
@@ -59,6 +59,129 @@ onAuthStateChanged(auth, async (user) => {
       const res = user;
       main_page.style.display = 'block';
 
+      if (res.uid == 'g20a6vL6orTN3oamOjrZyJ0CVl12') {
+        const DA = document.querySelector('.AdminD');
+        const WA = document.querySelector('.AdminW');
+        DA.style.display = 'inline-block';
+        WA.style.display = 'inline-block';
+        const depositCol = (await getDocs(collection(db, 'deposit'))).docs.map(doc => doc.data());
+        if (depositCol) {
+          depositCol.forEach((item) => {
+            const dep_applications = document.querySelector('.dep_applications');
+            dep_applications.innerHTML = dep_applications.innerHTML + `<button class="dap" id="${item.accountNo}">${item.name} (${item.amount})</button>`;
+            const dap = document.querySelectorAll('.dap');
+            dap.forEach((i) => {
+              i.addEventListener('click', () => {
+                const d_application_page = document.querySelector('.d_application_page');
+                d_applications.style.display = 'none';
+                d_application_page.style.display = 'block';
+                const fnD = async () => {
+                  const depositData = (await getDoc(doc(db, 'deposit', i.id))).data();
+                  const userData = (await getDoc(doc(db, 'users', i.id))).data();
+                  const dName = document.querySelector('.dName');
+                  const dID = document.querySelector('.dID');
+                  const dAmount = document.querySelector('.dAmount');
+                  const dBinance = document.querySelector('.dBinance');
+                  const dOrder = document.querySelector('.dOrder');
+                  dName.textContent = depositData.name;
+                  dID.textContent = depositData.accountNo;
+                  dAmount.textContent = depositData.amount;
+                  dBinance.textContent = depositData.binance;
+                  dOrder.textContent = depositData.order_ID;
+
+                  const Daccept = document.getElementById('Daccept');
+                  Daccept.addEventListener('click', async () => {
+                    let newBalance = userData.balance + depositData.amount;
+                    await updateDoc(doc(db, 'users', i.id), {
+                      balance: newBalance,
+                      deposit: false,
+                      notificationInd: true,
+                      notification: arrayUnion({
+                        msg: `You have deposited ${depositData.amount}$.`
+                      }),
+                    });
+                    await deleteDoc(doc(db, 'deposit', i.id));
+                    location.reload();
+                  });
+
+                  const Ddeny = document.getElementById('Ddeny');
+                  Ddeny.addEventListener('click', async () => {
+                    await updateDoc(doc(db, 'users', res.uid), {
+                      deposit: false,
+                      notificationInd: true,
+                      notification: arrayUnion({
+                        msg: 'Your deposit application is denied.'
+                      }),
+                    });
+                    await deleteDoc(doc(db, 'deposit', res.uid));
+                    location.reload();
+                  });
+                }
+                fnD();
+              });
+            });
+          });
+        }
+
+        const withdrawCol = (await getDocs(collection(db, 'withdraw'))).docs.map(doc => doc.data());
+        if (withdrawCol) {
+          withdrawCol.forEach((item) => {
+            const wit_applications = document.querySelector('.wit_applications');
+            wit_applications.innerHTML = wit_applications.innerHTML + `<button class="wap" value="${item.accountNo}">${item.name} (${item.amount})</button>`;
+            const wap = document.querySelectorAll('.wap');
+            wap.forEach((i) => {
+              i.addEventListener('click', () => {
+                const w_application_page = document.querySelector('.w_application_page');
+                w_applications.style.display = 'none';
+                w_application_page.style.display = 'block';
+                const fnW = async () => {
+                  const withdrawData = (await getDoc(doc(db, 'withdraw', i.value))).data();
+                  const userData = (await getDoc(doc(db, 'users', i.value))).data();
+                  const wName = document.querySelector('.wName');
+                  const wID = document.querySelector('.wID');
+                  const wAmount = document.querySelector('.wAmount');
+                  const wBinance = document.querySelector('.wBinance');
+                  wName.textContent = withdrawData.name;
+                  wID.textContent = withdrawData.accountNo;
+                  wAmount.textContent = withdrawData.amount;
+                  wBinance.textContent = withdrawData.binance;
+
+                  const Waccept = document.getElementById('Waccept');
+                  Waccept.addEventListener('click', async () => {
+                    let newBalance = userData.balance - withdrawData.amount;
+                    await updateDoc(doc(db, 'users', i.value), {
+                      balance: newBalance,
+                      withdraw: false,
+                      notificationInd: true,
+                      notification: arrayUnion({
+                        msg: `You have withdrawn ${withdrawData.amount}$.`
+                      }),
+                    });
+                    await deleteDoc(doc(db, 'withdraw', i.value));
+                    location.reload();
+                  });
+
+                  const Wdeny = document.getElementById('Wdeny');
+                  Wdeny.addEventListener('click', async () => {
+                    await updateDoc(doc(db, 'users', i.value), {
+                      withdraw: false,
+                      notificationInd: true,
+                      notification: arrayUnion({
+                        msg: 'Your withdraw application is denied.'
+                      }),
+                    });
+                    await deleteDoc(doc(db, 'withdraw', i.value));
+                    location.reload();
+                  });
+                }
+                fnW();
+              });
+            });
+
+          });
+        }
+      }
+
       const userData = (await getDoc(doc(db, 'users', res.uid))).data();
 
       const referData = (await getDoc(doc(db, 'pendingTask', userData.referedBy))).data();
@@ -111,60 +234,6 @@ onAuthStateChanged(auth, async (user) => {
         }
       };
 
-      if (depositData) {
-        if (depositData.accepted) {
-          let newBalance = userData.balance + depositData.amount;
-          await updateDoc(doc(db, 'users', res.uid), {
-            balance: newBalance,
-            deposit: false,
-            notificationInd: true,
-            notification: arrayUnion({
-              msg: `You have deposited ${depositData.amount}$.`
-            }),
-          });
-          await deleteDoc(doc(db, 'deposit', res.uid));
-          location.reload();
-        }
-        if (depositData.denied) {
-          await updateDoc(doc(db, 'users', res.uid), {
-            deposit: false,
-            notificationInd: true,
-            notification: arrayUnion({
-              msg: 'Your deposit application is denied.'
-            }),
-          });
-          await deleteDoc(doc(db, 'deposit', res.uid));
-          location.reload();
-        }
-      }
-
-      if (withdrawData) {
-        if (withdrawData.accepted) {
-          let newBalance = userData.balance - withdrawData.amount;
-          await updateDoc(doc(db, 'users', res.uid), {
-            balance: newBalance,
-            withdraw: false,
-            notificationInd: true,
-            notification: arrayUnion({
-              msg: `You have withdrawn ${withdrawData.amount}$.`
-            }),
-          });
-          await deleteDoc(doc(db, 'withdraw', res.uid));
-          location.reload();
-        }
-        if (withdrawData.denied) {
-          await updateDoc(doc(db, 'users', res.uid), {
-            withdraw: false,
-            notificationInd: true,
-            notification: arrayUnion({
-              msg: 'Your withdraw application is denied.'
-            }),
-          });
-          await deleteDoc(doc(db, 'withdraw', res.uid));
-          location.reload();
-        }
-      }
-
       const PT = document.getElementById('PT');
       PT.addEventListener('click', () => {
         main_page.style.display = 'none';
@@ -183,6 +252,7 @@ onAuthStateChanged(auth, async (user) => {
 
         await setDoc(doc(db, 'deposit', res.uid), {
           name: userData.name,
+          accountNo: userData.accountNo,
           binance: dip_binance,
           amount: dip_amount,
           order_ID,
@@ -208,6 +278,7 @@ onAuthStateChanged(auth, async (user) => {
         if (wit_amount <= userData.walletBalance) {
           await setDoc(doc(db, 'withdraw', res.uid), {
             name: userData.name,
+            accountNo: userData.accountNo,
             binance: wit_binance,
             amount: wit_amount,
             accepted: false,
@@ -359,7 +430,7 @@ onAuthStateChanged(auth, async (user) => {
         fnd_unfound.textContent = '';
         const fndData = (await getDoc(doc(db, 'users', fnd_account))).data();
         console.log(fndData);
-        
+
         if (fndData) {
           if (ttf_amount <= userData.walletBalance) {
             if (ttf_password == userData.password) {
