@@ -117,7 +117,7 @@ body {
  text-align: left;
  padding: 5px;
  margin-bottom: 10px;
- border-radius: 8px;
+ border-radius: 0px 8px 8px 8px;
 }
 .notification_content{
   padding: 12px;
@@ -427,4 +427,18 @@ body {
 .bottom {
  flex: 0.5;
  background-image: linear-gradient(to top right, transparent 50%, #FF9E00 50%);
+}
+
+
+/*Admin*/
+
+.dep_applications button, .wit_applications button{
+  display: block;
+  height: 25px;
+  width: 95%;
+  margin: 10px;
+  border-radius: 0px 10px 10px 10px;
+  border: 0.8px solid #FF9E00;
+  background-color: transparent;
+  color: #FF9E00;
 }
