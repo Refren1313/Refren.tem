@@ -256,8 +256,6 @@ onAuthStateChanged(auth, async (user) => {
           binance: dip_binance,
           amount: dip_amount,
           order_ID,
-          accepted: false,
-          denied: false,
         });
         await updateDoc(doc(db, 'users', res.uid), {
           deposit: true,
@@ -281,8 +279,6 @@ onAuthStateChanged(auth, async (user) => {
             accountNo: userData.accountNo,
             binance: wit_binance,
             amount: wit_amount,
-            accepted: false,
-            denied: false,
           });
           await updateDoc(doc(db, 'users', res.uid), {
             withdraw: true,
@@ -488,8 +484,8 @@ onAuthStateChanged(auth, async (user) => {
       if (referingData) {
         if (password === confirm_password) {
           const res = await createUserWithEmailAndPassword(auth, email, password);
-
           try {
+            sign_up.style.display = 'none';
             await setDoc(doc(db, "users", res.user.uid), {
               name: displayName,
               accountNo: res.user.uid,
@@ -504,11 +500,7 @@ onAuthStateChanged(auth, async (user) => {
               notification: [],
               notificationInd: false,
             });
-
-            await sendEmailVerification(auth.currentUser)
-              .then(() => {
-                alert('verification link sent.')
-              });
+            await sendEmailVerification(auth.currentUser);
           } catch (e) {
             const err = document.querySelector('.err');
             err.textContent = 'Sign up failed';
